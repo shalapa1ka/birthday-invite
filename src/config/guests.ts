@@ -18,4 +18,6 @@ export const guests: Guest[] = [
   { id: '19025f617329141502d70bf4b5f98b246e5adeaaf95bf4cb50c663104c62ec11', name: "Катя" },
   { id: '6597894420e347dd99f5ee631691b86c9585e63c3ea2f21ec3e86c3266df2014', name: "Вова" },
   { id: '8ef65eb28a8959179dc5b95391a2e474e32faae9fa066a52a1a11dd8cadb1b80', name: "Віка" },
+  { id: 'db81b6110e9042367265f75ab86a283f2209cc9455d2beb81347c491412122b4', name: "Богдан" },
+  { id: '4ba249cf62949b8577b1ce6a0da719c5d67121e9c8a24a78770032f787539122', name: "Маша" },
 ]
