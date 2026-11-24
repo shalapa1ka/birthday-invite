@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "birthday-rsvp",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-11-01",
+  "observability": { "enabled": true },
+
+  // Storage for answers. Create it with `npx wrangler kv namespace create RSVP`
+  // and paste the printed id here.
+  "kv_namespaces": [{ "binding": "RSVP", "id": "11c3296e5b774aea821b7e2fe238413a" }],
+
+  "vars": {
+    // Sites allowed to call the API (comma-separated, no trailing slash).
+    "ALLOWED_ORIGINS": "https://shalapa1ka.github.io,http://localhost:5173"
+  }
+
+  // Secrets (never commit them): `npx wrangler secret put TELEGRAM_BOT_TOKEN`
+  // and `npx wrangler secret put TELEGRAM_CHAT_ID`. For local dev put them into .dev.vars.
+}

@@ -1,0 +1,159 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Palette: Olive Grove · Rose Dust · Soft Sand (all text combinations pass WCAG AA) */
+  --color-paper: #f3ebdf; /* soft sand — page background */
+  --color-paper-dim: #ecdad5; /* rose dust — light tiles */
+  --color-ink: #2e3422; /* olive grove — dark blocks and main text */
+  --color-ink-soft: #3d4430;
+  --color-muted: #675d4e;
+  --color-line: #ddcdbc;
+  --color-accent: #8e4f58; /* deep rose dust */
+
+  --font-sans: 'Manrope', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', 'Times New Roman', Georgia, serif;
+
+  --ease-out-soft: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-paper font-sans text-ink antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    @apply bg-accent text-paper;
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[0.72rem] font-medium tracking-[0.22em] uppercase;
+  }
+
+  /* Darkens the hero photo where text overlaps it (follows the palette's ink colour) */
+  .hero-scrim {
+    background: linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--color-ink) 25%, transparent) 0%,
+      transparent 25%,
+      transparent 55%,
+      color-mix(in oklab, var(--color-ink) 85%, transparent) 100%
+    );
+  }
+
+  @media (width >= 64rem) {
+    .hero-scrim {
+      background: linear-gradient(180deg, color-mix(in oklab, var(--color-ink) 25%, transparent) 0%, transparent 25%);
+    }
+  }
+
+  /* Small legible label on top of photos */
+  .chip {
+    @apply rounded-full bg-ink/60 px-3 py-1.5 text-[0.68rem] font-medium tracking-[0.18em] text-paper uppercase backdrop-blur-md;
+  }
+
+  .btn {
+    @apply inline-flex min-h-14 items-center justify-center gap-3 rounded-full px-8 text-[0.95rem] font-medium tracking-wide transition duration-300 ease-out-soft select-none;
+  }
+
+  .btn:disabled {
+    @apply cursor-not-allowed opacity-40;
+  }
+
+  .btn-solid-light {
+    @apply bg-paper text-ink hover:bg-white active:scale-[0.98];
+  }
+
+  .btn-outline-dark {
+    @apply border border-ink/80 text-ink hover:bg-ink hover:text-paper active:scale-[0.98];
+  }
+
+  .btn-outline-light {
+    @apply border border-paper/60 text-paper hover:bg-paper hover:text-ink active:scale-[0.98];
+  }
+}
+
+/* ---------- Motion ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition:
+      opacity 1s var(--ease-out-soft) var(--reveal-delay, 0ms),
+      transform 1s var(--ease-out-soft) var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  .enter {
+    animation: enter 1.2s var(--ease-out-soft) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+
+  .hero-photo {
+    animation: hero-zoom 2.4s var(--ease-out-soft) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@keyframes hero-zoom {
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+  }
+}
+
+/* Vue <Transition name="swap"> */
+.swap-enter-active,
+.swap-leave-active {
+  transition:
+    opacity 0.45s var(--ease-out-soft),
+    transform 0.45s var(--ease-out-soft);
+}
+
+.swap-enter-from {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.swap-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
